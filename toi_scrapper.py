@@ -32,7 +32,7 @@ class ToiScraper:
 
     def _get_url(self, url):
         # Get the Url
-        resp = requests.get(url)
+        resp = requests.get(url, timeout=60)
         # log.info(f"Response {resp.status_code}")
         if resp.status_code == 200:
             return resp.text
@@ -60,7 +60,7 @@ class ToiScraper:
         web_url = f"{self.base_url}{url}"
         log.info(f"Parsing {web_url}")
         feed_url = f"https://toifeeds.indiatimes.com/treact/feeds/toi/web/show/news?path=/articleshow/{cms_id}.cms"
-        resp = requests.get(feed_url)
+        resp = requests.get(feed_url, timeout=60)
         rec = {}
         if resp:
             resp_data = resp.json()
