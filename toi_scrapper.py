@@ -1,10 +1,10 @@
 from datetime import date, datetime,  timedelta
 import logging
-import requests
-import urllib.request
 
 
 from bs4 import BeautifulSoup
+from security import safe_requests
+
 # import redis
 
 
@@ -32,7 +32,7 @@ class ToiScraper:
 
     def _get_url(self, url):
         # Get the Url
-        resp = requests.get(url)
+        resp = safe_requests.get(url)
         # log.info(f"Response {resp.status_code}")
         if resp.status_code == 200:
             return resp.text
@@ -60,7 +60,7 @@ class ToiScraper:
         web_url = f"{self.base_url}{url}"
         log.info(f"Parsing {web_url}")
         feed_url = f"https://toifeeds.indiatimes.com/treact/feeds/toi/web/show/news?path=/articleshow/{cms_id}.cms"
-        resp = requests.get(feed_url)
+        resp = safe_requests.get(feed_url)
         rec = {}
         if resp:
             resp_data = resp.json()
